@@ -8,7 +8,7 @@
     state: present
 
 - name: Add user to SSH allowed users group
-  loop: "{{ admin_users }}"
+  loop: "{{ admin_users | flatten(levels=1) }}"
   user:
     name: "{{ item.name }}"
     groups: "{{ ssh.allowed_group }}"

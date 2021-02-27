@@ -19,6 +19,7 @@
   - sudo
 
 - name: Add user to sudo group
+  loop: "{{ admin_users | flatten(levels=1) }}"
   user:
     name: "{{ item.name }}"
     groups: "{{ sudo_group }}"
@@ -26,4 +27,3 @@
   tags:
   - sudo
   - user
-  loop: "{{ admin_users }}"

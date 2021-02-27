@@ -1,6 +1,6 @@
 ---
 - name: Create user group
-  loop: "{{ admin_users }}"
+  loop: "{{ admin_users | flatten(levels=1) }}"
   group:
     name: "{{ item.name }}"
     gid: "{{ item.uid }}"
@@ -9,7 +9,7 @@
   - user
 
 - name: Create user
-  loop: "{{ admin_users }}"
+  loop: "{{ admin_users | flatten(levels=1) }}"
   user:
     name: "{{ item.name }}"
     group: "{{ item.name }}"
@@ -22,10 +22,7 @@
   - user
 
 - include_tasks: user-inner-dir.yml
-  loop:
-  - data
-  - bin
-  - tmp
+  loop: "{{ admin_users | flatten(levels=1) }}"
   loop_control:
     loop_var: user
 #  tags:

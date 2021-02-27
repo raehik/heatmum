@@ -1,5 +1,5 @@
 # vim: ft=yaml
-hostname: falco-arch
+hostname: zeus
 
 timezone: Europe/London
 locale:
