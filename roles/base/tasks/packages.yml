@@ -1,0 +1,36 @@
+---
+- name: Use all cores when compressing packages
+  lineinfile:
+    dest: /etc/makepkg.conf
+    regexp: "^COMPRESSXZ"
+    line: "COMPRESSXZ=(xz -c -z - --threads=0)"
+
+- name: Install universal base system packages
+  pacman:
+    name: "{{ packages.base }}"
+    state: present
+
+- name: Create pacman hook directory
+  file: path=/etc/pacman.d/hooks
+        state=directory
+  tags:
+    - packages
+
+- name: Install pacman extras (for paccache)
+  pacman:
+    name: pacman-contrib
+    state: present
+
+- name: Push pacman cache cleanup service
+  copy: src=paccache.service dest=/etc/systemd/system/paccache.service
+  notify:
+  - reload systemd config
+
+- name: Push pacman cache cleanup timer
+  copy: src=paccache.timer dest=/etc/systemd/system/paccache.timer
+  notify:
+  - reload systemd config
+  - restart paccache
+
+- name: Enable and start pacman cache cleanup timer
+  service: name=paccache.timer enabled=yes state=started

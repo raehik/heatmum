@@ -1,0 +1,10 @@
+---
+- name: Install packages - base
+  pacman:
+    name: "{{ packages.base }}"
+    state: present
+
+- name: Install packages - tools
+  pacman:
+    name: "{{ packages.tools }}"
+    state: present

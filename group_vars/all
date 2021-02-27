@@ -1,0 +1,77 @@
+# vim: ft=yaml
+hostname: falco-arch
+
+timezone: Europe/London
+locale:
+  system: en_US.UTF-8
+  present:
+  - en_US.UTF-8
+  console_keymap: uk
+
+# users with access to SSH, sudo
+admin_users:
+- name: raehik
+  uid: 1100
+  shell: /usr/bin/zsh
+- name: tony
+  uid: 1200
+  shell: /usr/bin/zsh
+
+journal:
+  max_size: 500M
+
+ssh:
+  port: 22
+  enable_sshd: True
+  allowed_group: ssh-user
+
+sudo_group: sudo
+
+## packages {{{
+packages:
+  base:
+  # system
+  - openssh
+  - rsync
+  - man-db
+  - man-pages
+  - htop
+
+  # SSH: support common client terminals
+  - rxvt-unicode-terminfo
+  - termite-terminfo
+
+  # shells & completions
+  - zsh
+  - zsh-completions
+  - bash
+  - bash-completion
+
+  # super essential dev tools
+  - neovim
+  - git
+  - tmux
+  - ripgrep
+  - python
+  - curl
+
+  # low level disk & filesystem tools
+  - gptfdisk
+  - e2fsprogs
+  - dosfstools
+  - ntfs-3g
+
+  # archive, compression tools
+  - zip
+  - unzip
+  - unrar
+  - p7zip
+
+  # essential!!
+  - figlet
+  - fortune-mod
+  - cmatrix
+
+  tools:
+  - atool       # archive tool wrapper (does zips, tars, ...)
+## }}}
