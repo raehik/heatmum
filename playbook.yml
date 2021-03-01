@@ -4,5 +4,7 @@
   roles:
   - role: base
     tags: base
+  - role: gpio
+    tags: gpio
   - role: apps
     tags: apps

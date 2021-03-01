@@ -1,0 +1,21 @@
+---
+- name: Create gpio group
+  group:
+    name: "{{ gpio_group }}"
+    state: present
+
+- name: Configure /dev/gpiomem permissions
+  template:
+    src: udev/80-gpio.rules
+    dest: /etc/udev/rules.d/80-gpio.rules
+  vars:
+    group: "{{ gpio_group }}"
+
+- name: Add user to gpio group
+  loop: "{{ admin_users | flatten(levels=1) }}"
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ gpio_group }}"
+    append: yes
+  tags:
+  - user
