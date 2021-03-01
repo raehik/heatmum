@@ -8,7 +8,7 @@ locale:
   - en_US.UTF-8
   console_keymap: uk
 
-# users with access to SSH, sudo
+# users with access to SSH, sudo, GPIO
 admin_users:
 - name: raehik
   uid: 1100
@@ -16,6 +16,8 @@ admin_users:
 - name: tony
   uid: 1200
   shell: /usr/bin/zsh
+
+gpio_group: gpio
 
 journal:
   max_size: 500M
